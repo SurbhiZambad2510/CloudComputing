@@ -4,9 +4,10 @@ RUN apt-get install wget
 RUN wget "https://raw.githubusercontent.com/mschermann/forensic_accounting/master/fb_sub.csv"
 
 WORKDIR /src/ 
-COPY . /src/
+COPY test.py ./
 
-ENTRYPOINT ["python","test.py"]
-EXPOSE 8888
+RUN python test.py
+
+
 
 
