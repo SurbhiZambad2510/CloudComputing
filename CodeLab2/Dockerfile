@@ -4,6 +4,8 @@ USER root
 
 RUN apt-get update && apt-get install wget
 
+RUN pip3 install jupyter
+
 WORKDIR /codeLab2
 
 RUN wget "https://raw.githubusercontent.com/mschermann/forensic_accounting/master/Introduction.ipynb"
