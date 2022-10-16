@@ -1,0 +1,32 @@
+version: '3.9'
+
+services: 
+  db_admin:
+    image: dpage/pgadmin4
+    hostname: dba
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGA_ADMIN_NAME}
+      - PGADMIN_DEFAULT_PASSWORD=${PGA_ADMIN_PASS}
+    ports:
+      - "81:80"
+  db:
+    image: postgres:12.12
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=web
+    ports:
+      - "5432:5432"
+  app:
+    build: .
+    hostname: app
+    environment:
+      - DB_HOSTNAME = db
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app/app:/app
+    ports:
+      - "8000:8000"
+
+
+

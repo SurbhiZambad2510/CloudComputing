@@ -1,0 +1,11 @@
+body{
+    background:DarkSlateGray;
+    margin-top: 50px;
+    margin-left: 100px;
+  }
+
+  p {
+    font-family: Georgia, serif;
+    font-size: 1.2em;
+    color: blueviolet;
+    }
