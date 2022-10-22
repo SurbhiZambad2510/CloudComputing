@@ -7,45 +7,39 @@ import json
 
 app = Flask(__name__)
 
-def get_db_connect():
+# def get_db_connect():
 
-    conn_string = psycopg2.connect( 
-    database = os.environ.get('PG_DB'), 
-    user = os.environ.get('PG_USER'), 
-    password ='pass', 
-    host = os.environ.get('DB_HOST'),   
-    port = os.environ.get('PG_PORT')  
-    )
-    return psycopg2.connect(conn_string)
+#     conn_string = psycopg2.connect( 
+#     database = os.environ.get('PG_DB'), 
+#     user = os.environ.get('PG_USER'), 
+#     password ='pass', 
+#     host = os.environ.get('DB_HOST'),   
+#     port = os.environ.get('PG_PORT')  
+#     )
+#     return psycopg2.connect(conn_string)
 
-def get_rec_from_db():
-    q=('SELECT ProductName, ProductPrice FROM meals ORDER BY RANDOM() LIMIT 1;')
+# def get_rec_from_db():
+#     q=('SELECT ProductName, ProductPrice FROM meals ORDER BY RANDOM() LIMIT 1;')
 
-    conn= get_db_connect()
-    cursor= conn.cursor()
-    cursor.execute(q)
-    ml = cursor.fetchall()
+#     conn= get_db_connect()
+#     cursor= conn.cursor()
+#     cursor.execute(q)
+#     ml = cursor.fetchall()
 
-    conn.close()
-    return ml
+#     conn.close()
+#     return ml
 
 def getVersion():
     conn = psycopg2.connect(
         database="web", user='root', password='pass', host='db', port= '5432'
     )
-
     cursor = conn.cursor()
-
-
     cursor.execute("SELECT mealname, mealprice FROM meals ORDER BY RANDOM() LIMIT 1")
-
     data = cursor.fetchone()
     print("Connection established to: ",data)
-
     return json.dumps(data)
-
     conn.close()
-    return data
+    # return data
 
 
 

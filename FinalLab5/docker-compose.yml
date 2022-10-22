@@ -1,0 +1,51 @@
+version: '3.9'
+
+
+services:
+  api:
+    build: ./api/ 
+    hostname: api 
+    volumes:
+      - ./api/code:/app
+    ports:
+    - "5000:5000"
+
+  consumer:
+    build: ./consumer/ 
+    hostname: consumer 
+    environment:
+      - API_HOST=${API_HOST}
+      - API_PORT=${API_PORT}
+      - API_ENDPOINT=${API_ENDPOINT}
+    volumes:
+      - ./consumer/code:/app
+    ports:
+    - "81:81"
+    
+  db_admin:
+    image: dpage/pgadmin4
+    hostname: dba
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PG_ADMIN_NAME}
+      - PGADMIN_DEFAULT_PASSWORD=${PG_ADMIN_PASS}
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PG_ADMIN_PORT}:${PG_ADMIN_PORT}"
+
+  db:
+    image: postgres:latest
+    hostname: db
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - data:/var/lib/postgresql
+      - ./db/init:/docker-entrypoint-initdb.d
+    ports:
+      - "${PG_PORT}:${PG_PORT}"
+
+volumes:
+  data:
+  pgadmin:
